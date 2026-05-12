@@ -2,6 +2,19 @@ import { RocketIcon, ArrowRightIcon, ChartIcon } from '../icons/Icon.jsx';
 import { LINKS } from '../config.js';
 import { useLang } from '../i18n.jsx';
 
+function Star() {
+  return (
+    <svg
+      className="mq-star"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z" />
+    </svg>
+  );
+}
+
 export default function Hero() {
   const { t } = useLang();
 
@@ -70,19 +83,23 @@ export default function Hero() {
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
           {Array.from({ length: 2 }).map((_, i) => (
-            <span key={i}>
-              <span>CHONGYA</span>
-              <span className="sep" />
-              <span lang="zh-Hans">冲鸭</span>
-              <span className="sep" />
-              <span>TO THE MOON</span>
-              <span className="sep" />
-              <span>WAGMI</span>
-              <span className="sep" />
-              <span>BNB CHAIN</span>
-              <span className="sep" />
-              <span>$CHONGYA</span>
-              <span className="sep" />
+            <span className="marquee-group" key={i}>
+              <span className="mq solid">CHONGYA</span>
+              <Star />
+              <span className="mq duck" lang="zh-Hans">冲鸭</span>
+              <Star />
+              <span className="mq outline">TO THE MOON</span>
+              <Star />
+              <span className="mq solid">WAGMI</span>
+              <Star />
+              <span className="mq duck" lang="zh-Hans">一起冲</span>
+              <Star />
+              <span className="mq outline">BNB CHAIN</span>
+              <Star />
+              <span className="mq solid">$CHONGYA</span>
+              <Star />
+              <span className="mq outline">HOLD TIGHT</span>
+              <Star />
             </span>
           ))}
         </div>

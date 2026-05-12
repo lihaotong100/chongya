@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { DuckIcon, MenuIcon, CloseIcon } from '../icons/Icon.jsx';
+import { MenuIcon, CloseIcon } from '../icons/Icon.jsx';
 import { LINKS } from '../config.js';
 import { useLang } from '../i18n.jsx';
 
@@ -47,7 +47,6 @@ export default function Nav() {
       <nav className="nav">
         <div className="nav-inner">
           <a href="#top" className="nav-brand" aria-label={t('nav.home')}>
-            <DuckIcon size={28} />
             <span>CHONGYA</span>
             <span className="cn" lang="zh-Hans">冲鸭</span>
           </a>
