@@ -116,14 +116,79 @@ const dict = {
       titleGold: 'One family.',
       sub: 'Each duck wears a different color of the flock. Tap a portrait, meet the crew, pick your duck.',
       tapHint: 'Tap any duck to meet them',
+      shareCta: 'Share my duck',
+      shareTemplate: 'I’m {name} 🦆 — {tagline}\n\nWhich duck are you? $CHONGYA 🚀 #冲鸭',
       members: [
-        { name: 'Golden Boss', tagline: 'The OG. Leads the charge to the moon.', color: '#F0B90B' },
-        { name: 'Snow Builder', tagline: 'Ships code at 3am. Sleeps never.', color: '#F5F5F7' },
-        { name: 'Rosy Degen', tagline: 'Buys the dip. Buys the rip. Just buys.', color: '#FF9EC4' },
-        { name: 'Violet Whale', tagline: 'Moves the chart when it gets bored.', color: '#B189FF' },
-        { name: 'Sky Chad', tagline: 'Calls the next pump before it happens.', color: '#7CB7FF' },
-        { name: 'Mint Memer', tagline: 'Viral templates and pure chaos.', color: '#7CE4A2' },
-        { name: 'Onyx Sniper', tagline: 'Quiet in chat. Loudest on the chart.', color: '#2A2A33' },
+        {
+          name: 'Golden Boss',
+          tagline: 'The OG. Leads the charge to the moon.',
+          color: '#F0B90B',
+          stats: [
+            { label: 'Charge', value: '99' },
+            { label: 'Vibe', value: '∞' },
+            { label: 'Bags', value: 'MAX' },
+          ],
+        },
+        {
+          name: 'Snow Builder',
+          tagline: 'Ships code at 3am. Sleeps never.',
+          color: '#F5F5F7',
+          stats: [
+            { label: 'Commits', value: '999' },
+            { label: 'Sleep', value: '0' },
+            { label: 'Caffeine', value: '∞' },
+          ],
+        },
+        {
+          name: 'Rosy Degen',
+          tagline: 'Buys the dip. Buys the rip. Just buys.',
+          color: '#FF9EC4',
+          stats: [
+            { label: 'FOMO', value: '∞' },
+            { label: 'Patience', value: '1' },
+            { label: 'Slippage', value: 'MAX' },
+          ],
+        },
+        {
+          name: 'Violet Whale',
+          tagline: 'Moves the chart when it gets bored.',
+          color: '#B189FF',
+          stats: [
+            { label: 'Bags', value: '∞' },
+            { label: 'TVL', value: '99%' },
+            { label: 'Stealth', value: '0' },
+          ],
+        },
+        {
+          name: 'Sky Chad',
+          tagline: 'Calls the next pump before it happens.',
+          color: '#7CB7FF',
+          stats: [
+            { label: 'Alpha', value: '99' },
+            { label: 'Calls', value: '999' },
+            { label: 'Humble', value: '0' },
+          ],
+        },
+        {
+          name: 'Mint Memer',
+          tagline: 'Viral templates and pure chaos.',
+          color: '#7CE4A2',
+          stats: [
+            { label: 'Memes', value: '999' },
+            { label: 'Chaos', value: '∞' },
+            { label: 'Logic', value: '0' },
+          ],
+        },
+        {
+          name: 'Onyx Sniper',
+          tagline: 'Quiet in chat. Loudest on the chart.',
+          color: '#2A2A33',
+          stats: [
+            { label: 'Stealth', value: '∞' },
+            { label: 'Hit Rate', value: '99' },
+            { label: 'Mercy', value: '0' },
+          ],
+        },
       ],
     },
     community: {
@@ -254,14 +319,79 @@ const dict = {
       titleGold: '一个家。',
       sub: '每只鸭子代表鸭群里的一种颜色。点一张头像，认识全员，挑一只你的鸭子。',
       tapHint: '点击任意鸭子认识它',
+      shareCta: '分享我的鸭子',
+      shareTemplate: '我是 {name} 🦆 — {tagline}\n\n你是哪只？$CHONGYA 🚀 #冲鸭',
       members: [
-        { name: '金色老大', tagline: '元老。带头冲向月球。', color: '#F0B90B' },
-        { name: '雪白码农', tagline: '凌晨三点提交代码。从不睡觉。', color: '#F5F5F7' },
-        { name: '玫红 Degen', tagline: '抄底也买，追高也买，反正就是买。', color: '#FF9EC4' },
-        { name: '紫色巨鲸', tagline: '无聊的时候顺手砸/拉一下盘。', color: '#B189FF' },
-        { name: '天蓝大佬', tagline: '在拉盘发生之前就喊单。', color: '#7CB7FF' },
-        { name: '薄荷段子手', tagline: '负责生产爆款梗图和混乱。', color: '#7CE4A2' },
-        { name: '玄武狙击手', tagline: '群里沉默。线上最响。', color: '#2A2A33' },
+        {
+          name: '金色老大',
+          tagline: '元老。带头冲向月球。',
+          color: '#F0B90B',
+          stats: [
+            { label: '冲劲', value: '99' },
+            { label: '气场', value: '∞' },
+            { label: '仓位', value: 'MAX' },
+          ],
+        },
+        {
+          name: '雪白码农',
+          tagline: '凌晨三点提交代码。从不睡觉。',
+          color: '#F5F5F7',
+          stats: [
+            { label: '提交', value: '999' },
+            { label: '睡眠', value: '0' },
+            { label: '咖啡', value: '∞' },
+          ],
+        },
+        {
+          name: '玫红 Degen',
+          tagline: '抄底也买，追高也买，反正就是买。',
+          color: '#FF9EC4',
+          stats: [
+            { label: 'FOMO', value: '∞' },
+            { label: '耐心', value: '1' },
+            { label: '滑点', value: 'MAX' },
+          ],
+        },
+        {
+          name: '紫色巨鲸',
+          tagline: '无聊的时候顺手砸/拉一下盘。',
+          color: '#B189FF',
+          stats: [
+            { label: '仓位', value: '∞' },
+            { label: 'TVL', value: '99%' },
+            { label: '低调', value: '0' },
+          ],
+        },
+        {
+          name: '天蓝大佬',
+          tagline: '在拉盘发生之前就喊单。',
+          color: '#7CB7FF',
+          stats: [
+            { label: 'Alpha', value: '99' },
+            { label: '喊单', value: '999' },
+            { label: '谦虚', value: '0' },
+          ],
+        },
+        {
+          name: '薄荷段子手',
+          tagline: '负责生产爆款梗图和混乱。',
+          color: '#7CE4A2',
+          stats: [
+            { label: '梗图', value: '999' },
+            { label: '混乱', value: '∞' },
+            { label: '逻辑', value: '0' },
+          ],
+        },
+        {
+          name: '玄武狙击手',
+          tagline: '群里沉默。线上最响。',
+          color: '#2A2A33',
+          stats: [
+            { label: '隐身', value: '∞' },
+            { label: '命中', value: '99' },
+            { label: '心慈', value: '0' },
+          ],
+        },
       ],
     },
     community: {

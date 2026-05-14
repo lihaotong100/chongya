@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLang } from '../i18n.jsx';
+import { XIcon } from '../icons/Icon.jsx';
 
 const portraits = [
   '/character/duck-gold.png',
@@ -12,16 +13,39 @@ const portraits = [
 ];
 
 const fallbackColors = ['#F0B90B', '#F5F5F7', '#FF9EC4', '#B189FF', '#7CB7FF', '#7CE4A2', '#2A2A33'];
+const AUTOPLAY_MS = 3500;
 
 export default function Squad() {
   const { t } = useLang();
   const members = t('squad.members') || [];
+  const shareTemplate = t('squad.shareTemplate') || '';
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
   const stripRef = useRef(null);
 
   const safeIndex = Math.min(active, Math.max(members.length - 1, 0));
-  const current = members[safeIndex];
-  const accent = (current && current.color) || fallbackColors[safeIndex] || '#F0B90B';
+  const current = members[safeIndex] || {};
+  const accent = current.color || fallbackColors[safeIndex] || '#F0B90B';
+  const stats = current.stats || [];
+
+  const goTo = useCallback((i) => setActive(i), []);
+
+  useEffect(() => {
+    if (paused || members.length < 2) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+    const id = window.setTimeout(() => {
+      setActive((i) => (i + 1) % members.length);
+    }, AUTOPLAY_MS);
+    return () => window.clearTimeout(id);
+  }, [active, paused, members.length]);
+
+  useEffect(() => {
+    const onVis = () => setPaused(document.hidden);
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
 
   useEffect(() => {
     const strip = stripRef.current;
@@ -49,6 +73,18 @@ export default function Squad() {
     }
   };
 
+  const onShare = () => {
+    if (!current.name) return;
+    const text = shareTemplate
+      .replace('{name}', current.name)
+      .replace('{tagline}', current.tagline || '');
+    const url = typeof window !== 'undefined' ? window.location.href : '';
+    const intent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${url ? `&url=${encodeURIComponent(url)}` : ''}`;
+    if (typeof window !== 'undefined') {
+      window.open(intent, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   if (!members.length) return null;
 
   return (
@@ -71,6 +107,12 @@ export default function Squad() {
           style={{ '--accent': accent }}
           role="region"
           aria-label={t('squad.eyebrow')}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false);
+          }}
         >
           <div className="squad-stage-portrait">
             <div className="squad-stage-glow" aria-hidden="true" />
@@ -102,7 +144,30 @@ export default function Squad() {
             </span>
             <h3 className="squad-stage-name">{current.name}</h3>
             <p className="squad-stage-tagline">{current.tagline}</p>
-            <p className="squad-stage-hint">{t('squad.tapHint')}</p>
+
+            {stats.length > 0 && (
+              <ul className="squad-stats" aria-label={`${current.name} stats`}>
+                {stats.map((s) => (
+                  <li key={s.label} className="squad-stat">
+                    <span className="squad-stat-label">{s.label}</span>
+                    <span className="squad-stat-value">{s.value}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div className="squad-stage-actions">
+              <button
+                type="button"
+                className="squad-share"
+                onClick={onShare}
+                aria-label={t('squad.shareCta')}
+              >
+                <XIcon size={16} />
+                <span>{t('squad.shareCta')}</span>
+              </button>
+              <span className="squad-stage-hint">{t('squad.tapHint')}</span>
+            </div>
           </div>
         </div>
 
@@ -127,9 +192,9 @@ export default function Squad() {
                 tabIndex={isActive ? 0 : -1}
                 className={`squad-thumb${isActive ? ' is-active' : ''}`}
                 style={{ '--thumb-accent': color }}
-                onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
+                onClick={() => goTo(i)}
+                onMouseEnter={() => goTo(i)}
+                onFocus={() => goTo(i)}
               >
                 <span className="squad-thumb-ring" aria-hidden="true" />
                 <img
