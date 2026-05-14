@@ -13,14 +13,12 @@ const portraits = [
 ];
 
 const fallbackColors = ['#F0B90B', '#F5F5F7', '#FF9EC4', '#B189FF', '#7CB7FF', '#7CE4A2', '#2A2A33'];
-const AUTOPLAY_MS = 3500;
 
 export default function Squad() {
   const { t } = useLang();
   const members = t('squad.members') || [];
   const shareTemplate = t('squad.shareTemplate') || '';
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
   const stripRef = useRef(null);
 
   const safeIndex = Math.min(active, Math.max(members.length - 1, 0));
@@ -29,23 +27,6 @@ export default function Squad() {
   const stats = current.stats || [];
 
   const goTo = useCallback((i) => setActive(i), []);
-
-  useEffect(() => {
-    if (paused || members.length < 2) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return;
-    }
-    const id = window.setTimeout(() => {
-      setActive((i) => (i + 1) % members.length);
-    }, AUTOPLAY_MS);
-    return () => window.clearTimeout(id);
-  }, [active, paused, members.length]);
-
-  useEffect(() => {
-    const onVis = () => setPaused(document.hidden);
-    document.addEventListener('visibilitychange', onVis);
-    return () => document.removeEventListener('visibilitychange', onVis);
-  }, []);
 
   useEffect(() => {
     const strip = stripRef.current;
@@ -107,12 +88,6 @@ export default function Squad() {
           style={{ '--accent': accent }}
           role="region"
           aria-label={t('squad.eyebrow')}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false);
-          }}
         >
           <div className="squad-stage-portrait">
             <div className="squad-stage-glow" aria-hidden="true" />
