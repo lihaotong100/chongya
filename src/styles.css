@@ -367,8 +367,13 @@ section {
 }
 
 @media (max-width: 880px) {
-  .nav-links,
+  .nav-links {
+    display: none;
+  }
   .nav-cta {
+    gap: 8px;
+  }
+  .nav-cta .btn {
     display: none;
   }
   .nav-toggle {

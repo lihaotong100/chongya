@@ -108,15 +108,6 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
-            <button
-              className="lang-toggle lang-toggle-mobile"
-              onClick={toggleLang}
-              aria-label={t('nav.langSwitch')}
-            >
-              <span className={lang === 'en' ? 'on' : ''}>EN</span>
-              <span className="lang-divider" aria-hidden="true">/</span>
-              <span className={lang === 'zh' ? 'on' : ''} lang="zh-Hans">中</span>
-            </button>
             <a
               className="btn btn-primary"
               href={LINKS.pancakeswap}
