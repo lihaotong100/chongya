@@ -112,12 +112,15 @@ const dict = {
     },
     squad: {
       eyebrow: 'The Chongya Squad',
-      title: 'Seven ducks. ',
+      title: 'One flock. ',
       titleGold: 'One family.',
-      sub: 'Each duck wears a different color of the flock. Tap a portrait, meet the crew, pick your duck.',
+      sub: 'Meet the crew — or take six questions and find your duck. No right answers. Just ducks.',
       tapHint: 'Tap any duck to meet them',
-      shareCta: 'Share my duck',
-      shareTemplate: '🚀🦆 I’m {name}\n\n“{tagline}”\n\n{stats}\n\nWhich duck are you?\n$CHONGYA #冲鸭',
+      takeQuizCta: 'Which duck are YOU? →',
+      backToGalleryCta: 'Back to the flock',
+      mysteryChip: 'Coming soon',
+      mysteryAria: 'Hidden duck — coming soon',
+      mysteryThumbName: 'Hidden',
       members: [
         {
           name: 'Golden Boss',
@@ -189,6 +192,12 @@ const dict = {
             { label: 'Mercy', value: '0' },
           ],
         },
+        {
+          name: '???',
+          tagline: 'Hatching soon. Stay tuned, duck.',
+          color: '#3a3a45',
+          mystery: true,
+        },
       ],
     },
     quiz: {
@@ -204,7 +213,7 @@ const dict = {
       shareCta: 'Share my duck',
       retakeCta: 'Retake',
       shareTemplate: '🚀🦆 I tested in as {name} · {code}\n\n“{tagline}”\n\n{stats}\n\nWhat duck are YOU?\n$CHONGYA #冲鸭',
-      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH'],
+      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH', '???'],
       questions: [
         {
           q: 'Someone in the group chat just 100x’d. You:',
@@ -270,6 +279,10 @@ const dict = {
       tgCta: 'Telegram',
       xCta: 'Follow on X',
       discordCta: 'Discord',
+    },
+    bgm: {
+      playAria: 'Play background music',
+      muteAria: 'Mute background music',
     },
     footer: {
       copyright: 'All ducks reserved.',
@@ -386,12 +399,15 @@ const dict = {
     },
     squad: {
       eyebrow: '冲鸭家族',
-      title: '七只鸭，',
+      title: '一群鸭，',
       titleGold: '一个家。',
-      sub: '每只鸭子代表鸭群里的一种颜色。点一张头像，认识全员，挑一只你的鸭子。',
+      sub: '先认识全员，或者用六道题找出你是哪只。没有标准答案，只有鸭子。',
       tapHint: '点击任意鸭子认识它',
-      shareCta: '分享我的鸭子',
-      shareTemplate: '🚀🦆 我是 {name}\n\n「{tagline}」\n\n{stats}\n\n你是哪只？\n$CHONGYA #冲鸭',
+      takeQuizCta: '测一下我是哪只 →',
+      backToGalleryCta: '回到家族',
+      mysteryChip: '即将登场',
+      mysteryAria: '隐藏款 — 即将登场',
+      mysteryThumbName: '隐藏款',
       members: [
         {
           name: '金色老大',
@@ -463,6 +479,12 @@ const dict = {
             { label: '心慈', value: '0' },
           ],
         },
+        {
+          name: '???',
+          tagline: '正在孵化中。敬请期待，鸭。',
+          color: '#3a3a45',
+          mystery: true,
+        },
       ],
     },
     quiz: {
@@ -478,7 +500,7 @@ const dict = {
       shareCta: '分享我的鸭子',
       retakeCta: '重新测',
       shareTemplate: '🚀🦆 测出来我是 {name} · {code}\n\n「{tagline}」\n\n{stats}\n\n你是哪只？\n$CHONGYA #冲鸭',
-      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH'],
+      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH', '???'],
       questions: [
         {
           q: '群里有人刚 100x 了。你：',
@@ -544,6 +566,10 @@ const dict = {
       tgCta: 'Telegram',
       xCta: '在 X 上关注',
       discordCta: 'Discord',
+    },
+    bgm: {
+      playAria: '播放背景音乐',
+      muteAria: '关闭背景音乐',
     },
     footer: {
       copyright: '保留所有鸭权。',

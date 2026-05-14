@@ -7,9 +7,9 @@ import Tokenomics from './components/Tokenomics.jsx';
 import HowToBuy from './components/HowToBuy.jsx';
 import About from './components/About.jsx';
 import Squad from './components/Squad.jsx';
-import WhichDuck from './components/WhichDuck.jsx';
 import Community from './components/Community.jsx';
 import Footer from './components/Footer.jsx';
+import BGMToggle from './components/BGMToggle.jsx';
 
 function RevealObserver() {
   const { lang } = useLang();
@@ -43,9 +43,9 @@ export default function App() {
         <HowToBuy />
         <About />
         <Squad />
-        <WhichDuck />
         <Community />
         <Footer />
+        <BGMToggle />
       </div>
     </LangProvider>
   );
