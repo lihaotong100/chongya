@@ -71,13 +71,18 @@ export default function Squad() {
 
   const goTo = useCallback((i) => setActive(i), []);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     const strip = stripRef.current;
     if (!strip) return;
-    const node = strip.querySelector('[data-active="true"]');
-    if (node && typeof node.scrollIntoView === 'function') {
-      node.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
     }
+    const node = strip.querySelector('[data-active="true"]');
+    if (!node) return;
+    const target = node.offsetLeft - (strip.clientWidth - node.clientWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
   }, [safeActive]);
 
   const onStripKeyDown = (e) => {
