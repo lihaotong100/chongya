@@ -11,13 +11,17 @@ export default function About() {
         <div className="about-grid">
           <div className="about-art reveal">
             <img
-              src="/images/builder.jpg"
-              alt="Chongya builder duck working at a desk in front of the BNB Chain skyline"
-              width="1024"
-              height="1280"
+              src="/images/squad-colors.jpg"
+              alt="The Chongya flock — seven colored astronaut ducks, the whole duck universe on the moon"
+              width="719"
+              height="714"
               loading="lazy"
               decoding="async"
             />
+            <span className="about-art-tag">
+              <span className="about-art-tag-dot" />
+              {t('about.eyebrow')}
+            </span>
           </div>
           <div className="reveal">
             <span className="eyebrow">

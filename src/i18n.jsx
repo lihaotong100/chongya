@@ -81,7 +81,7 @@ const dict = {
       steps: [
         {
           title: 'Get a Wallet',
-          body: 'Install MetaMask, Trust Wallet or any BNB Chain compatible wallet on your device.',
+          body: 'Install Binance Web3 Wallet (or any BNB Chain compatible wallet) on your device.',
         },
         {
           title: 'Fund with BNB',
@@ -99,10 +99,10 @@ const dict = {
     },
     about: {
       eyebrow: 'About · 关于冲鸭',
-      title: 'One duck. ',
-      titleGold: 'One mission.',
+      title: 'More than a duck. ',
+      titleGold: 'A whole universe.',
       sub:
-        'CHONGYA hatched on BNB Chain with nothing but attitude and a flag. No suits, no slides, no whitepaper full of buzzwords — just a duck that refuses to back down. While others promise the moon, this duck is already packing for the trip.',
+        'CHONGYA isn’t one duck — it’s a growing IP on BNB Chain: a cast of characters, a community, a culture. No suits, no slides, no whitepaper full of buzzwords — just a whole flock that refuses to back down. While others promise the moon, this universe is already packing for the trip.',
       points: [
         'Fair launch, no presale, no team allocation, no VC kickbacks.',
         'Liquidity burned forever. Contract renounced from day one.',
@@ -112,16 +112,18 @@ const dict = {
     },
     squad: {
       eyebrow: 'The Chongya Squad',
-      title: 'Six ducks. ',
+      title: 'Seven ducks. ',
       titleGold: 'One family.',
-      sub: 'Every color is a member of the gang. Pick your duck, claim your color, join the flock.',
+      sub: 'Each duck wears a different color of the flock. Tap a portrait, meet the crew, pick your duck.',
+      tapHint: 'Tap any duck to meet them',
       members: [
-        { name: 'Golden Boss', tagline: 'The OG. Leads the charge to the moon.' },
-        { name: 'Snow Builder', tagline: 'Ships code at 3am. Sleeps never.' },
-        { name: 'Sky Chad', tagline: 'Calls the next pump before it happens.' },
-        { name: 'Rosy Degen', tagline: 'Buys the dip. Buys the rip. Just buys.' },
-        { name: 'Violet Whale', tagline: 'Moves the chart when it gets bored.' },
-        { name: 'Mint Memer', tagline: 'Viral templates and pure chaos.' },
+        { name: 'Golden Boss', tagline: 'The OG. Leads the charge to the moon.', color: '#F0B90B' },
+        { name: 'Snow Builder', tagline: 'Ships code at 3am. Sleeps never.', color: '#F5F5F7' },
+        { name: 'Rosy Degen', tagline: 'Buys the dip. Buys the rip. Just buys.', color: '#FF9EC4' },
+        { name: 'Violet Whale', tagline: 'Moves the chart when it gets bored.', color: '#B189FF' },
+        { name: 'Sky Chad', tagline: 'Calls the next pump before it happens.', color: '#7CB7FF' },
+        { name: 'Mint Memer', tagline: 'Viral templates and pure chaos.', color: '#7CE4A2' },
+        { name: 'Onyx Sniper', tagline: 'Quiet in chat. Loudest on the chart.', color: '#2A2A33' },
       ],
     },
     community: {
@@ -217,7 +219,7 @@ const dict = {
       steps: [
         {
           title: '准备钱包',
-          body: '在手机上装 MetaMask、Trust Wallet 或任意支持 BNB Chain 的钱包。',
+          body: '在手机上装 Binance Web3 钱包（或任意支持 BNB Chain 的钱包）。',
         },
         {
           title: '充值 BNB',
@@ -235,10 +237,10 @@ const dict = {
     },
     about: {
       eyebrow: '关于 · About',
-      title: '一只鸭，',
-      titleGold: '一个使命。',
+      title: '不止一只鸭，',
+      titleGold: '是一整个鸭宇宙。',
       sub:
-        '冲鸭在 BNB Chain 上诞生，除了态度和一面旗子什么都没带。没有西装精英，没有路演 PPT，没有充满黑话的白皮书 — 只有一只死不退缩的鸭子。别人都在承诺登月，这只鸭子已经在打包行李了。',
+        '冲鸭不是一只鸭，而是诞生在 BNB Chain 上的一整个 IP —— 一群角色，一个社区，一种文化。没有西装精英，没有路演 PPT，没有充满黑话的白皮书 —— 只有一整群死不退缩的鸭子。别人都在承诺登月，这个宇宙已经在打包行李了。',
       points: [
         '公平发射，无预售，无团队份额，无 VC 输送。',
         '流动性永久销毁，合约第一天就放弃管理权。',
@@ -248,16 +250,18 @@ const dict = {
     },
     squad: {
       eyebrow: '冲鸭家族',
-      title: '六只鸭，',
+      title: '七只鸭，',
       titleGold: '一个家。',
-      sub: '每种颜色都是家族成员。挑一只你的鸭子，认领你的颜色，加入鸭群。',
+      sub: '每只鸭子代表鸭群里的一种颜色。点一张头像，认识全员，挑一只你的鸭子。',
+      tapHint: '点击任意鸭子认识它',
       members: [
-        { name: '金色老大', tagline: '元老。带头冲向月球。' },
-        { name: '雪白码农', tagline: '凌晨三点提交代码。从不睡觉。' },
-        { name: '天蓝大佬', tagline: '在拉盘发生之前就喊单。' },
-        { name: '玫红 Degen', tagline: '抄底也买，追高也买，反正就是买。' },
-        { name: '紫色巨鲸', tagline: '无聊的时候顺手砸/拉一下盘。' },
-        { name: '薄荷段子手', tagline: '负责生产爆款梗图和混乱。' },
+        { name: '金色老大', tagline: '元老。带头冲向月球。', color: '#F0B90B' },
+        { name: '雪白码农', tagline: '凌晨三点提交代码。从不睡觉。', color: '#F5F5F7' },
+        { name: '玫红 Degen', tagline: '抄底也买，追高也买，反正就是买。', color: '#FF9EC4' },
+        { name: '紫色巨鲸', tagline: '无聊的时候顺手砸/拉一下盘。', color: '#B189FF' },
+        { name: '天蓝大佬', tagline: '在拉盘发生之前就喊单。', color: '#7CB7FF' },
+        { name: '薄荷段子手', tagline: '负责生产爆款梗图和混乱。', color: '#7CE4A2' },
+        { name: '玄武狙击手', tagline: '群里沉默。线上最响。', color: '#2A2A33' },
       ],
     },
     community: {

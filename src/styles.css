@@ -831,11 +831,22 @@ section {
 }
 
 .about-art {
+  position: relative;
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--gold-line);
   box-shadow: var(--shadow-gold);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
+}
+
+.about-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 50% 0%, transparent 0%, #07070a55 100%),
+    linear-gradient(180deg, transparent 60%, #07070ae6 100%);
+  pointer-events: none;
 }
 
 .about-art img {
@@ -843,6 +854,36 @@ section {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.about-art-tag {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  background: #07070ad9;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-line);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.about-art-tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
 }
 
 .about ul {
@@ -880,85 +921,346 @@ section {
   border-bottom: 1px solid var(--border);
 }
 
-.squad-hero {
-  margin: 0 auto 8px;
-  max-width: 560px;
-  aspect-ratio: 1 / 1;
-  border-radius: 28px;
-  overflow: hidden;
-  border: 1px solid var(--gold-line);
+/* Stage: large featured duck + name/tagline */
+.squad-stage {
+  --accent: var(--gold);
+  margin: 12px auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
+  padding: 40px 44px;
+  border-radius: 32px;
+  border: 1px solid #ffffff14;
+  background:
+    radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 60%),
+    linear-gradient(180deg, #11111a 0%, #0a0a10 100%);
+  box-shadow:
+    0 40px 100px -40px color-mix(in srgb, var(--accent) 55%, transparent),
+    inset 0 1px 0 #ffffff10;
+  transition: box-shadow 0.4s ease;
   position: relative;
-  box-shadow: 0 30px 80px -30px #f0b90b66, 0 0 0 1px #ffffff0a;
+  overflow: hidden;
 }
 
-.squad-hero img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.squad-hero::after {
+.squad-stage::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(80% 60% at 50% 0%, transparent 0%, #07070a55 100%),
-    linear-gradient(180deg, transparent 60%, #07070ae6 100%);
+    radial-gradient(60% 60% at 85% 15%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(40% 40% at 10% 90%, #ffffff08, transparent 70%);
   pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-.squad-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+.squad-stage-portrait {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
-@media (max-width: 880px) {
-  .squad-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.squad-stage-glow {
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent) 0%, transparent 70%);
+  filter: blur(28px);
+  z-index: 0;
+  transition: background 0.4s ease;
 }
 
-.duck-card {
-  padding: 24px;
-  border-radius: var(--radius);
-  background: linear-gradient(180deg, #16161d, #0f0f15);
-  border: 1px solid #ffffff1a;
-  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+.squad-stage-frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0c0c14, #050508);
+  box-shadow:
+    inset 0 0 0 1px #ffffff1a,
+    inset 0 30px 60px -20px #ffffff08,
+    0 30px 80px -30px #000000cc;
 }
 
-.duck-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--gold-line);
-  background: linear-gradient(180deg, #1c1c12, #11110c);
+.squad-stage-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
 }
 
-.duck-color {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+.squad-stage-img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.squad-stage-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--accent) 60%, transparent),
+    inset 0 0 40px color-mix(in srgb, var(--accent) 18%, transparent);
+  transition: box-shadow 0.4s ease;
+}
+
+.squad-stage-index {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #07070a;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, #ffffff1a);
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.squad-stage-index .sep,
+.squad-stage-index .total {
+  color: #ffffff80;
+}
+
+.squad-stage-info {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.squad-stage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #07070a;
   margin-bottom: 18px;
-  box-shadow: 0 10px 28px -12px currentColor, inset 0 0 0 1px #ffffff14;
+  box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.squad-stage-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #07070a;
+}
+
+.squad-stage-name {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--accent) 70%, #ffffff) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.4s ease;
+}
+
+.squad-stage-tagline {
+  margin: 0 0 24px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: #d6d6e0;
+  max-width: 420px;
+}
+
+.squad-stage-hint {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 70%, #ffffffa0);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.squad-stage-hint::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* Strip: 7 thumb picker */
+.squad-strip {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.squad-thumb {
+  position: relative;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  outline: none;
+  --thumb-accent: var(--gold);
+}
+
+.squad-thumb img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 22px;
+  display: block;
+  background: #0a0a10;
+  filter: saturate(0.85) brightness(0.78);
+  transition: filter 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 10px 30px -18px #000000, inset 0 0 0 1px #ffffff10;
+}
+
+.squad-thumb-ring {
+  position: absolute;
+  inset: -3px -3px auto -3px;
+  aspect-ratio: 1 / 1;
+  border-radius: 26px;
+  pointer-events: none;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--thumb-accent) 80%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.squad-thumb-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff80;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition: color 0.25s ease;
+}
+
+.squad-thumb:hover img,
+.squad-thumb:focus-visible img {
+  filter: saturate(1) brightness(1);
+  transform: translateY(-4px);
+}
+
+.squad-thumb:focus-visible .squad-thumb-ring,
+.squad-thumb:hover .squad-thumb-ring {
+  opacity: 0.45;
+}
+
+.squad-thumb.is-active img {
+  filter: saturate(1.05) brightness(1);
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 40px -18px color-mix(in srgb, var(--thumb-accent) 70%, transparent),
+    inset 0 0 0 2px color-mix(in srgb, var(--thumb-accent) 70%, transparent);
+}
+
+.squad-thumb.is-active .squad-thumb-ring {
   opacity: 1;
 }
 
-.duck-card h4 {
-  font-family: var(--font-body);
-  font-weight: 800;
-  margin: 0 0 8px;
-  font-size: 19px;
+.squad-thumb.is-active .squad-thumb-name {
   color: #ffffff;
-  letter-spacing: -0.005em;
-  line-height: 1.25;
 }
 
-.duck-card p {
-  margin: 0;
-  color: #d4d4dc;
-  font-size: 15px;
-  line-height: 1.6;
+.squad-thumb:focus-visible img {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px color-mix(in srgb, var(--thumb-accent) 80%, transparent);
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .squad-stage {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 28px;
+    text-align: center;
+  }
+  .squad-stage-portrait {
+    max-width: 320px;
+  }
+  .squad-stage-tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .squad-stage-hint {
+    justify-content: center;
+  }
+  .squad-strip {
+    grid-template-columns: repeat(7, minmax(96px, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 4px 12px;
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+  .squad-thumb {
+    scroll-snap-align: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .squad-stage {
+    padding: 24px 18px;
+    border-radius: 24px;
+  }
+  .squad-stage-portrait {
+    max-width: 260px;
+  }
+  .squad-stage-tagline {
+    font-size: 16px;
+  }
+  .squad-strip {
+    gap: 10px;
+  }
+  .squad-thumb img {
+    border-radius: 18px;
+  }
+  .squad-thumb-name {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .squad-stage-img,
+  .squad-thumb img,
+  .squad-thumb-ring,
+  .squad-stage-name {
+    transition: none !important;
+  }
 }
 
 /* ---------- TOKENOMICS ---------- */
