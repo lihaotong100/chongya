@@ -13,6 +13,7 @@ const portraits = [
 ];
 
 const fallbackColors = ['#F0B90B', '#F5F5F7', '#FF9EC4', '#B189FF', '#7CB7FF', '#7CE4A2', '#2A2A33'];
+const shareSlugs = ['gold', 'snow', 'rose', 'violet', 'sky', 'mint', 'onyx'];
 
 export default function Squad() {
   const { t } = useLang();
@@ -56,11 +57,17 @@ export default function Squad() {
 
   const onShare = () => {
     if (!current.name) return;
+    const statsLine = (current.stats || [])
+      .map((s) => `▸ ${s.label} ${s.value}`)
+      .join('\n');
     const text = shareTemplate
       .replace('{name}', current.name)
-      .replace('{tagline}', current.tagline || '');
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    const intent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${url ? `&url=${encodeURIComponent(url)}` : ''}`;
+      .replace('{tagline}', current.tagline || '')
+      .replace('{stats}', statsLine);
+    const slug = shareSlugs[safeIndex];
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const shareUrl = slug ? `${origin}/share/duck-${slug}.html` : origin;
+    const intent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
     if (typeof window !== 'undefined') {
       window.open(intent, '_blank', 'noopener,noreferrer');
     }

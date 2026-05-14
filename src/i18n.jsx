@@ -117,7 +117,7 @@ const dict = {
       sub: 'Each duck wears a different color of the flock. Tap a portrait, meet the crew, pick your duck.',
       tapHint: 'Tap any duck to meet them',
       shareCta: 'Share my duck',
-      shareTemplate: 'I’m {name} 🦆 — {tagline}\n\nWhich duck are you? $CHONGYA 🚀 #冲鸭',
+      shareTemplate: '🚀🦆 I’m {name}\n\n“{tagline}”\n\n{stats}\n\nWhich duck are you?\n$CHONGYA #冲鸭',
       members: [
         {
           name: 'Golden Boss',
@@ -187,6 +187,77 @@ const dict = {
             { label: 'Stealth', value: '∞' },
             { label: 'Hit Rate', value: '99' },
             { label: 'Mercy', value: '0' },
+          ],
+        },
+      ],
+    },
+    quiz: {
+      eyebrow: 'Which duck are you?',
+      title: 'Six questions. ',
+      titleGold: 'One duck.',
+      sub: 'No right answers. Just ducks. Pick fast — your first reaction is the most honest.',
+      progress: 'Question {n} / {total}',
+      hint: 'Press 1–4 to pick · R to restart',
+      resultLabel: 'You hatched as…',
+      resultSub: 'Welcome to the flock. Charge, duck.',
+      traitsLabel: 'Signature stats',
+      shareCta: 'Share my duck',
+      retakeCta: 'Retake',
+      shareTemplate: '🚀🦆 I tested in as {name} · {code}\n\n“{tagline}”\n\n{stats}\n\nWhat duck are YOU?\n$CHONGYA #冲鸭',
+      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH'],
+      questions: [
+        {
+          q: 'Someone in the group chat just 100x’d. You:',
+          options: [
+            { text: 'Ask what they bought. Copy-trade right now.', duck: 2 },
+            { text: 'Not jealous. My bags will get there too.', duck: 0 },
+            { text: 'Stalk their wallet, reverse-engineer the next trade.', duck: 1 },
+            { text: 'Reply "next candle: -90%" with a meme.', duck: 5 },
+          ],
+        },
+        {
+          q: 'Your wallet, honestly:',
+          options: [
+            { text: 'One bag. Ride or die.', duck: 0 },
+            { text: 'Fifty tokens, mostly dust.', duck: 2 },
+            { text: 'A pile of jpegs and shitcoins.', duck: 5 },
+            { text: 'Hidden. Even my wallet doesn’t know.', duck: 6 },
+          ],
+        },
+        {
+          q: 'Group chat strategy:',
+          options: [
+            { text: 'Drop the alpha first, no questions.', duck: 4 },
+            { text: 'Lurk silently for weeks.', duck: 6 },
+            { text: 'Spam pepes and "wagmi".', duck: 5 },
+            { text: 'Never speak. When I do, it’s a big trade.', duck: 3 },
+          ],
+        },
+        {
+          q: 'A new token launches in 10 minutes. You:',
+          options: [
+            { text: 'Bridge funds, slippage 50%, send it.', duck: 2 },
+            { text: 'Read the contract first.', duck: 1 },
+            { text: 'I wait. They’ll come to me.', duck: 3 },
+            { text: 'Already in. I was the dev.', duck: 4 },
+          ],
+        },
+        {
+          q: 'Your true nemesis:',
+          options: [
+            { text: 'Paper hands.', duck: 0 },
+            { text: 'Stop loss.', duck: 2 },
+            { text: 'Logic.', duck: 5 },
+            { text: 'Liquidity.', duck: 3 },
+          ],
+        },
+        {
+          q: 'The chart just broke ATH. First move:',
+          options: [
+            { text: 'Screenshot, post, "I told you so".', duck: 4 },
+            { text: 'Add more. Always more.', duck: 0 },
+            { text: 'Update the dashboard, deploy v2.', duck: 1 },
+            { text: 'Move funds to cold wallet. Vanish.', duck: 6 },
           ],
         },
       ],
@@ -320,7 +391,7 @@ const dict = {
       sub: '每只鸭子代表鸭群里的一种颜色。点一张头像，认识全员，挑一只你的鸭子。',
       tapHint: '点击任意鸭子认识它',
       shareCta: '分享我的鸭子',
-      shareTemplate: '我是 {name} 🦆 — {tagline}\n\n你是哪只？$CHONGYA 🚀 #冲鸭',
+      shareTemplate: '🚀🦆 我是 {name}\n\n「{tagline}」\n\n{stats}\n\n你是哪只？\n$CHONGYA #冲鸭',
       members: [
         {
           name: '金色老大',
@@ -390,6 +461,77 @@ const dict = {
             { label: '隐身', value: '∞' },
             { label: '命中', value: '99' },
             { label: '心慈', value: '0' },
+          ],
+        },
+      ],
+    },
+    quiz: {
+      eyebrow: '你是哪只鸭？',
+      title: '六道题，',
+      titleGold: '一只鸭。',
+      sub: '没有标准答案，只有鸭子。凭第一直觉选 —— 最不假思索的那个就是你。',
+      progress: '第 {n} / {total} 题',
+      hint: '按 1–4 选项 · 按 R 重测',
+      resultLabel: '你出生的样子是…',
+      resultSub: '欢迎加入鸭群。冲，鸭！',
+      traitsLabel: '专属属性',
+      shareCta: '分享我的鸭子',
+      retakeCta: '重新测',
+      shareTemplate: '🚀🦆 测出来我是 {name} · {code}\n\n「{tagline}」\n\n{stats}\n\n你是哪只？\n$CHONGYA #冲鸭',
+      codes: ['HODL', 'BUIDL', 'FOMO', 'WHALE', 'ALPHA', 'WAGMI', 'STLTH'],
+      questions: [
+        {
+          q: '群里有人刚 100x 了。你：',
+          options: [
+            { text: '马上问买的啥，立刻跟单。', duck: 2 },
+            { text: '不羡慕，我的仓位早晚也会到。', duck: 0 },
+            { text: '翻他钱包，反推他的下一笔交易。', duck: 1 },
+            { text: '在群里回「下一根 -90%」+ 配梗图。', duck: 5 },
+          ],
+        },
+        {
+          q: '你现在的钱包，说实话：',
+          options: [
+            { text: '一个 bag，all-in 死磕。', duck: 0 },
+            { text: '50 个币，大部分都是灰。', duck: 2 },
+            { text: '一堆 jpeg + 一堆狗币。', duck: 5 },
+            { text: '藏起来了。连我自己都不知道在哪。', duck: 6 },
+          ],
+        },
+        {
+          q: '群聊策略：',
+          options: [
+            { text: '直接甩 alpha，不问问题。', duck: 4 },
+            { text: '潜水几周再说。', duck: 6 },
+            { text: '刷 pepe 和 wagmi。', duck: 5 },
+            { text: '从不发言，一发言就是大单。', duck: 3 },
+          ],
+        },
+        {
+          q: '新币 10 分钟后开盘。你：',
+          options: [
+            { text: '桥过去，滑点拉到 50%，all-in。', duck: 2 },
+            { text: '先把合约读一遍。', duck: 1 },
+            { text: '不急，他们会来找我。', duck: 3 },
+            { text: '已经在里面了。我就是 dev。', duck: 4 },
+          ],
+        },
+        {
+          q: '你的天敌是：',
+          options: [
+            { text: 'Paper hands。', duck: 0 },
+            { text: '止损。', duck: 2 },
+            { text: '逻辑。', duck: 5 },
+            { text: '流动性。', duck: 3 },
+          ],
+        },
+        {
+          q: '月线刚突破 ATH。第一件事：',
+          options: [
+            { text: '截图发推，标准式「我早就说了」。', duck: 4 },
+            { text: '加仓。永远再加一点。', duck: 0 },
+            { text: '更新 dashboard，部署 v2。', duck: 1 },
+            { text: '转冷钱包，消失。', duck: 6 },
           ],
         },
       ],
