@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLang } from '../i18n.jsx';
 import { XIcon, ArrowRightIcon } from '../icons/Icon.jsx';
 
@@ -24,14 +24,44 @@ export default function Squad() {
   const { t } = useLang();
   const members = t('squad.members') || [];
   const questions = t('quiz.questions') || [];
-  const codes = t('quiz.codes') || [];
+  const axesConfig = t('quiz.axes') || [];
+  const typesMap = t('quiz.types') || {};
 
   const [phase, setPhase] = useState(PHASE_GALLERY);
   const [active, setActive] = useState(0);
   const [step, setStep] = useState(0);
   const [picks, setPicks] = useState([]);
-  const [pendingPick, setPendingPick] = useState(null);
+  const [pendingIdx, setPendingIdx] = useState(null);
   const stripRef = useRef(null);
+
+  const ybtiResult = useMemo(() => {
+    if (picks.length < questions.length || picks.length === 0 || axesConfig.length === 0) return null;
+    const tallies = axesConfig.map(() => ({ left: 0, right: 0 }));
+    picks.forEach((p) => {
+      if (tallies[p.axis]) tallies[p.axis][p.side] += 1;
+    });
+    const axes = tallies.map((tally, i) => {
+      const total = tally.left + tally.right || 1;
+      const leftPct = Math.round((tally.left / total) * 100);
+      const rightPct = 100 - leftPct;
+      const dominant = tally.left >= tally.right ? 'left' : 'right';
+      return {
+        index: i,
+        leftLetter: axesConfig[i].left.letter,
+        leftLabel: axesConfig[i].left.label,
+        rightLetter: axesConfig[i].right.letter,
+        rightLabel: axesConfig[i].right.label,
+        leftPct,
+        rightPct,
+        dominant,
+        dominantLetter: axesConfig[i][dominant].letter,
+        dominantLabel: axesConfig[i][dominant].label,
+      };
+    });
+    const code = axes.map((a) => a.dominantLetter).join('');
+    const type = typesMap[code] || null;
+    return { code, type, axes };
+  }, [picks, questions.length, axesConfig, typesMap]);
 
   const totalQuestions = questions.length;
   const safeActive = Math.min(active, Math.max(members.length - 1, 0));
@@ -70,7 +100,7 @@ export default function Squad() {
   const startQuiz = useCallback(() => {
     setStep(0);
     setPicks([]);
-    setPendingPick(null);
+    setPendingIdx(null);
     setPhase(PHASE_QUIZ);
   }, []);
 
@@ -81,37 +111,43 @@ export default function Squad() {
   const resetQuiz = useCallback(() => {
     setStep(0);
     setPicks([]);
-    setPendingPick(null);
+    setPendingIdx(null);
     setPhase(PHASE_QUIZ);
   }, []);
 
   const choose = useCallback(
-    (duckIdx) => {
-      if (pendingPick !== null) return;
-      setPendingPick(duckIdx);
+    (optionIdx) => {
+      if (pendingIdx !== null) return;
+      const q = questions[step];
+      const opt = q && q.options ? q.options[optionIdx] : null;
+      if (!opt) return;
+      setPendingIdx(optionIdx);
       window.setTimeout(() => {
         setPicks((prev) => {
-          const next = [...prev, duckIdx];
+          const next = [...prev, { axis: q.axis, side: opt.side }];
           if (next.length >= totalQuestions) {
-            const counts = new Array(members.length).fill(0);
-            next.forEach((d) => {
-              if (typeof d === 'number' && d >= 0 && d < counts.length) counts[d] += 1;
+            const tallies = axesConfig.map(() => ({ left: 0, right: 0 }));
+            next.forEach((p) => {
+              if (tallies[p.axis]) tallies[p.axis][p.side] += 1;
             });
-            let best = 0;
-            for (let i = 1; i < counts.length; i += 1) {
-              if (counts[i] > counts[best]) best = i;
-            }
-            setActive(best);
+            const code = tallies
+              .map((tally, i) => {
+                const dominant = tally.left >= tally.right ? 'left' : 'right';
+                return axesConfig[i][dominant].letter;
+              })
+              .join('');
+            const type = typesMap[code];
+            if (type && typeof type.duck === 'number') setActive(type.duck);
             setPhase(PHASE_RESULT);
           } else {
             setStep((s) => s + 1);
           }
           return next;
         });
-        setPendingPick(null);
+        setPendingIdx(null);
       }, 260);
     },
-    [pendingPick, totalQuestions, members.length]
+    [pendingIdx, step, questions, totalQuestions, axesConfig, typesMap]
   );
 
   // Keyboard for quiz phase
@@ -126,7 +162,7 @@ export default function Squad() {
         const opt = questions[step].options[idx];
         if (opt) {
           e.preventDefault();
-          choose(opt.duck);
+          choose(idx);
         }
       } else if (e.key.toLowerCase() === 'r') {
         e.preventDefault();
@@ -151,17 +187,16 @@ export default function Squad() {
   }, [phase, resetQuiz]);
 
   const handleShare = () => {
-    const member = members[safeActive];
-    if (!member) return;
+    if (!ybtiResult || !ybtiResult.type) return;
     const template = t('quiz.shareTemplate') || '';
-    const statsLine = (member.stats || [])
-      .map((s) => `▸ ${s.label} ${s.value}`)
+    const axesLine = ybtiResult.axes
+      .map((a) => `▸ ${a.leftLabel} ${a.leftPct}% / ${a.rightLabel} ${a.rightPct}%`)
       .join('\n');
     const text = template
-      .replace('{name}', member.name || '')
-      .replace('{code}', codes[safeActive] || '')
-      .replace('{tagline}', member.tagline || '')
-      .replace('{stats}', statsLine);
+      .replace('{code}', ybtiResult.code)
+      .replace('{title}', ybtiResult.type.title || '')
+      .replace('{commentary}', ybtiResult.type.commentary || '')
+      .replace('{axesLine}', axesLine);
     const slug = shareSlugs[safeActive];
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const shareUrl = slug ? `${origin}/share/duck-${slug}.html` : origin;
@@ -329,7 +364,7 @@ export default function Squad() {
               <p className="quiz-question">{questions[step].q}</p>
               <div className="quiz-options" role="radiogroup" aria-label={questions[step].q}>
                 {questions[step].options.map((opt, i) => {
-                  const isPending = pendingPick !== null && pendingPick === opt.duck;
+                  const isPending = pendingIdx === i;
                   return (
                     <button
                       key={i}
@@ -337,8 +372,8 @@ export default function Squad() {
                       role="radio"
                       aria-checked={false}
                       className={`quiz-option${isPending ? ' is-pending' : ''}`}
-                      onClick={() => choose(opt.duck)}
-                      disabled={pendingPick !== null}
+                      onClick={() => choose(i)}
+                      disabled={pendingIdx !== null}
                     >
                       <span className="quiz-option-key" aria-hidden="true">{i + 1}</span>
                       <span className="quiz-option-text">{opt.text}</span>
@@ -351,14 +386,14 @@ export default function Squad() {
           </div>
         )}
 
-        {phase === PHASE_RESULT && (
+        {phase === PHASE_RESULT && ybtiResult && (
           <div
-            className="quiz-result reveal in"
+            className="ybti-result"
             style={{ '--accent': galleryAccent }}
             role="region"
             aria-live="polite"
           >
-            <div className="quiz-result-portrait">
+            <div className="ybti-result-portrait">
               <div className="quiz-result-glow" aria-hidden="true" />
               <div className="quiz-result-frame">
                 <img
@@ -370,29 +405,47 @@ export default function Squad() {
                 />
                 <span className="quiz-result-ring" aria-hidden="true" />
               </div>
-              <span className="quiz-result-code">{codes[safeActive] || ''}</span>
             </div>
 
-            <div className="quiz-result-info">
-              <span className="quiz-result-label">{t('quiz.resultLabel')}</span>
-              <h3 className="quiz-result-name">{currentMember.name}</h3>
-              <p className="quiz-result-tagline">{currentMember.tagline}</p>
+            <div className="ybti-result-info">
+              <span className="ybti-result-label">{t('quiz.resultLabel')}</span>
+              <div className="ybti-code-row">
+                <span className="ybti-code">
+                  {ybtiResult.code.split('').map((letter, i) => (
+                    <span key={i} className="ybti-code-letter" style={{ animationDelay: `${0.05 * i}s` }}>{letter}</span>
+                  ))}
+                </span>
+              </div>
+              <h3 className="ybti-result-title">{ybtiResult.type ? ybtiResult.type.title : ybtiResult.code}</h3>
 
-              {galleryStats.length > 0 && (
-                <div className="quiz-result-traits">
-                  <span className="quiz-result-traits-label">{t('quiz.traitsLabel')}</span>
-                  <ul>
-                    {galleryStats.map((s) => (
-                      <li key={s.label}>
-                        <span className="quiz-trait-label">{s.label}</span>
-                        <span className="quiz-trait-value">{s.value}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="ybti-axes">
+                <span className="ybti-axes-label">{t('quiz.axesTitle')}</span>
+                <ul>
+                  {ybtiResult.axes.map((a) => (
+                    <li key={a.index} className="ybti-axis">
+                      <div className="ybti-axis-head">
+                        <span className={`ybti-axis-side${a.dominant === 'left' ? ' is-dominant' : ''}`}>
+                          <strong>{a.leftLetter}</strong> {a.leftLabel} {a.leftPct}%
+                        </span>
+                        <span className={`ybti-axis-side ybti-axis-side--right${a.dominant === 'right' ? ' is-dominant' : ''}`}>
+                          {a.rightPct}% {a.rightLabel} <strong>{a.rightLetter}</strong>
+                        </span>
+                      </div>
+                      <div className="ybti-axis-bar" aria-hidden="true">
+                        <span className="ybti-axis-bar-left" style={{ width: `${a.leftPct}%` }} />
+                        <span className="ybti-axis-bar-right" style={{ width: `${a.rightPct}%` }} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {ybtiResult.type && ybtiResult.type.commentary && (
+                <blockquote className="ybti-commentary">
+                  <span className="ybti-commentary-label">{t('quiz.commentaryLabel')}</span>
+                  <p>{ybtiResult.type.commentary}</p>
+                </blockquote>
               )}
-
-              <p className="quiz-result-sub">{t('quiz.resultSub')}</p>
 
               <div className="quiz-actions">
                 <button
