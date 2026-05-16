@@ -320,6 +320,12 @@ const dict = {
         HRQB: { title: 'Cold Storage Godfather',  duck: 1, commentary: 'Cold wallet + multisig + physical safe. Nobody knows your BTC count. Not even the state can find your cash flow.' },
       },
     },
+    contributors: {
+      eyebrow: 'Community Contributors',
+      title: 'Built by the ',
+      titleGold: 'flock.',
+      sub: 'The ducks behind the duck — builders, artists, mods, and degenerates who made this happen.',
+    },
     community: {
       eyebrow: 'Join the flock',
       bannerParts: ['WAGMI', '一起冲', 'TO THE MOON'],
@@ -655,6 +661,12 @@ const dict = {
         HRQD: { title: '神隐量化老哥',   duck: 6, commentary: '自己写 bot 跑 yield，仓位披露 = 0。Anon 大佬，圈外人 DYOR 都搜不到你。' },
         HRQB: { title: '冷库教父',       duck: 1, commentary: '冷钱包 + 多签 + 物理保险柜。BTC 数量没人知道，连国家都查不到你的现金流。' },
       },
+    },
+    contributors: {
+      eyebrow: '社区贡献者',
+      title: '由鸭群',
+      titleGold: '共同构建。',
+      sub: '鸭子背后的鸭子 —— 让这一切成真的开发者、艺术家、管理员和冲友。',
     },
     community: {
       eyebrow: '加入鸭群',

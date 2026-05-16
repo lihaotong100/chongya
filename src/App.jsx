@@ -7,6 +7,7 @@ import Tokenomics from './components/Tokenomics.jsx';
 import HowToBuy from './components/HowToBuy.jsx';
 import About from './components/About.jsx';
 import Squad from './components/Squad.jsx';
+import Contributors from './components/Contributors.jsx';
 import Community from './components/Community.jsx';
 import Footer from './components/Footer.jsx';
 import BGMToggle from './components/BGMToggle.jsx';
@@ -43,6 +44,7 @@ export default function App() {
         <HowToBuy />
         <About />
         <Squad />
+        <Contributors />
         <Community />
         <Footer />
         <BGMToggle />

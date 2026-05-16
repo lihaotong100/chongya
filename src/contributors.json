@@ -1,0 +1,32 @@
+[
+  {
+    "twitter": "chongya_bsc",
+    "role_en": "Project Founder",
+    "role_zh": "项目创始人"
+  },
+  {
+    "twitter": "example_builder",
+    "role_en": "Lead Developer",
+    "role_zh": "首席开发者"
+  },
+  {
+    "twitter": "example_artist",
+    "role_en": "NFT Artist",
+    "role_zh": "NFT 艺术家"
+  },
+  {
+    "twitter": "example_mod",
+    "role_en": "Community Moderator",
+    "role_zh": "社区管理员"
+  },
+  {
+    "twitter": "example_kol",
+    "role_en": "KOL & Advisor",
+    "role_zh": "KOL 顾问"
+  },
+  {
+    "twitter": "example_memer",
+    "role_en": "Meme Lord",
+    "role_zh": "梗图大神"
+  }
+]
