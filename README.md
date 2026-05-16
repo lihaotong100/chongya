@@ -45,3 +45,5 @@ vercel --prod # deploy to production
 - Hero / squad / community images live in `public/images/`.
 - Copy & numbers are inline in each component for easy tweaking.
 # chongya
+
+> Last updated: 2026-05-16
