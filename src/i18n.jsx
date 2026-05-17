@@ -329,6 +329,12 @@ const dict = {
       xCta: 'Follow on X',
       discordCta: 'Discord',
     },
+    contributors: {
+      eyebrow: 'Contributors',
+      title: 'Built by ',
+      titleGold: 'the flock.',
+      sub: 'The amazing people behind CHONGYA. Click to visit their profile.',
+    },
     bgm: {
       playAria: 'Play background music',
       muteAria: 'Mute background music',
@@ -664,6 +670,12 @@ const dict = {
       tgCta: 'Telegram',
       xCta: '在 X 上关注',
       discordCta: 'Discord',
+    },
+    contributors: {
+      eyebrow: '贡献者',
+      title: '由',
+      titleGold: '鸭群共建。',
+      sub: 'CHONGYA 背后的优秀贡献者们。点击头像访问他们的主页。',
     },
     bgm: {
       playAria: '播放背景音乐',
