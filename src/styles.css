@@ -429,6 +429,15 @@ section {
     font-size: 16px;
     padding: 6px 4px;
   }
+  .mobile-menu-socials {
+    display: flex;
+    gap: 10px;
+    padding-top: 6px;
+  }
+  .mobile-menu-socials .nav-social-icon {
+    width: 42px;
+    height: 42px;
+  }
   .mobile-menu-backdrop {
     display: block;
     position: fixed;
