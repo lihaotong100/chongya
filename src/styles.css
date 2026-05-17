@@ -2673,7 +2673,7 @@ section {
     0 0 20px #f0b90b44;
 }
 
-.contributor-name {
+.contributor-handle {
   font-family: var(--font-body);
   font-weight: 800;
   font-size: 15px;
@@ -2686,18 +2686,19 @@ section {
   max-width: 100%;
 }
 
-.contributor-handle {
+.contributor-card:hover .contributor-handle {
+  color: var(--gold);
+}
+
+.contributor-role {
   font-size: 13px;
   color: var(--muted);
   letter-spacing: 0.01em;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-}
-
-.contributor-card:hover .contributor-handle {
-  color: var(--gold);
 }
 
 @media (max-width: 560px) {
@@ -2715,10 +2716,10 @@ section {
     width: 64px;
     height: 64px;
   }
-  .contributor-name {
+  .contributor-handle {
     font-size: 13px;
   }
-  .contributor-handle {
+  .contributor-role {
     font-size: 11px;
   }
 }

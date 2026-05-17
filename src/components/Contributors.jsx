@@ -41,8 +41,10 @@ export default function Contributors() {
 }
 
 function ContributorCard({ contributor }) {
-  const { username, name } = contributor;
+  const { username, role } = contributor;
+  const { lang } = useLang();
   const [imgError, setImgError] = useState(false);
+  const displayRole = role?.[lang] || role?.en || '';
 
   return (
     <a
@@ -50,17 +52,17 @@ function ContributorCard({ contributor }) {
       href={profileUrl(username)}
       target="_blank"
       rel="noreferrer"
-      aria-label={`${name || username} on X`}
+      aria-label={`@${username} on X`}
     >
       <div className="contributor-avatar">
         {imgError ? (
           <div className="contributor-avatar-fallback">
-            {(name || username).charAt(0).toUpperCase()}
+            {username.charAt(0).toUpperCase()}
           </div>
         ) : (
           <img
             src={avatarUrl(username)}
-            alt={name || username}
+            alt={`@${username}`}
             width="80"
             height="80"
             loading="lazy"
@@ -70,8 +72,8 @@ function ContributorCard({ contributor }) {
         )}
         <div className="contributor-avatar-ring" aria-hidden="true" />
       </div>
-      <span className="contributor-name">{name || username}</span>
       <span className="contributor-handle">@{username}</span>
+      <span className="contributor-role">{displayRole}</span>
     </a>
   );
 }

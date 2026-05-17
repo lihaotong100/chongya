@@ -1,6 +1,9 @@
 [
   {
     "username": "chongya_bsc",
-    "name": "CHONGYA"
+    "role": {
+      "en": "Founder",
+      "zh": "创始人"
+    }
   }
 ]

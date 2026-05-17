@@ -330,9 +330,9 @@ const dict = {
       discordCta: 'Discord',
     },
     contributors: {
-      eyebrow: 'Contributors',
-      title: 'Built by ',
-      titleGold: 'the flock.',
+      eyebrow: 'Community Builder',
+      title: 'Community ',
+      titleGold: 'Builder.',
       sub: 'The amazing people behind CHONGYA. Click to visit their profile.',
     },
     bgm: {
@@ -672,9 +672,9 @@ const dict = {
       discordCta: 'Discord',
     },
     contributors: {
-      eyebrow: '贡献者',
-      title: '由',
-      titleGold: '鸭群共建。',
+      eyebrow: '社区建设者',
+      title: '社区',
+      titleGold: '建设者。',
       sub: 'CHONGYA 背后的优秀贡献者们。点击头像访问他们的主页。',
     },
     bgm: {
