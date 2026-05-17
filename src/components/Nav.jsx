@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MenuIcon, CloseIcon } from '../icons/Icon.jsx';
+import { MenuIcon, CloseIcon, XIcon, TelegramIcon } from '../icons/Icon.jsx';
 import { LINKS } from '../config.js';
 import { useLang } from '../i18n.jsx';
 
@@ -9,7 +9,9 @@ export default function Nav() {
   const firstLinkRef = useRef(null);
   const togglerRef = useRef(null);
 
-  const links = [
+  const isGallery = window.location.hash.startsWith('#/gallery');
+
+  const homeLinks = [
     { href: '#meaning', label: t('nav.meaning') },
     { href: '#tokenomics', label: t('nav.tokenomics') },
     { href: '#buy', label: t('nav.howToBuy') },
@@ -17,6 +19,8 @@ export default function Nav() {
     { href: '#squad', label: t('nav.squad') },
     { href: '#contributors', label: t('nav.contributors') },
   ];
+
+  const links = isGallery ? [] : homeLinks;
 
   useEffect(() => {
     if (!open) {
@@ -59,6 +63,21 @@ export default function Nav() {
             ))}
           </div>
           <div className="nav-cta">
+            <a className="nav-gallery-link" href={isGallery ? '#top' : '#/gallery'}>
+              {isGallery ? t('nav.backHome') : t('nav.gallery')}
+            </a>
+            <div className="nav-socials">
+              {LINKS.telegram && (
+                <a href={LINKS.telegram} target="_blank" rel="noreferrer" aria-label="Telegram" className="nav-social-icon">
+                  <TelegramIcon size={16} />
+                </a>
+              )}
+              {LINKS.twitter && (
+                <a href={LINKS.twitter} target="_blank" rel="noreferrer" aria-label="X / Twitter" className="nav-social-icon">
+                  <XIcon size={14} />
+                </a>
+              )}
+            </div>
             <button
               className="lang-toggle"
               onClick={toggleLang}
@@ -109,6 +128,9 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
+            <a href={isGallery ? '#top' : '#/gallery'} onClick={close}>
+              {isGallery ? t('nav.backHome') : t('nav.gallery')}
+            </a>
             <a
               className="btn btn-primary"
               href={LINKS.pancakeswap}

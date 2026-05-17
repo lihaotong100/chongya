@@ -3,7 +3,7 @@ import { VolumeOnIcon, VolumeOffIcon } from '../icons/Icon.jsx';
 import { useLang } from '../i18n.jsx';
 
 const STORAGE_KEY = 'chongya:bgm';
-const SRC = '/BGM.MP3';
+const SRC = '/冲鸭主题曲.mp3';
 
 export default function BGMToggle() {
   const { t } = useLang();
