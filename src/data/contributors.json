@@ -1,0 +1,23 @@
+[
+  {
+    "username": "Weikinglu",
+    "role": {
+      "en": "Content Creator",
+      "zh": "内容创作者"
+    }
+  },
+  {
+    "username": "iMeow168",
+    "role": {
+      "en": "Community Operations",
+      "zh": "社区运营"
+    }
+  },
+  {
+    "username": "superolive68157",
+    "role": {
+      "en": "Developer",
+      "zh": "写代码的"
+    }
+  }
+]
