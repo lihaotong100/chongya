@@ -2618,7 +2618,7 @@ section {
   background: linear-gradient(180deg, #ffffff08, #ffffff02);
   text-decoration: none;
   color: inherit;
-  width: 160px;
+  width: 180px;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
