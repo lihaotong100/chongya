@@ -42,8 +42,8 @@ function buildManifest(publicDir) {
 
   images.push(...characterImages);
 
-  const bgmPath = path.join(publicDir, 'BGM.MP3');
-  if (fs.existsSync(bgmPath)) music.push('/BGM.MP3');
+  const bgmPath = path.join(publicDir, '冲鸭主题曲.mp3');
+  if (fs.existsSync(bgmPath)) music.push('/冲鸭主题曲.mp3');
 
   const galleryMusicFiles = scanDir(galleryMusicDir, '/gallery/music');
   galleryMusicFiles.forEach((f) => { if (isAudio(f)) music.push(f); });
