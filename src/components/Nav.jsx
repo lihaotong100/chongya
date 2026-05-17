@@ -141,6 +141,18 @@ export default function Nav() {
             >
               {t('nav.buyCta')}
             </a>
+            <div className="mobile-menu-socials">
+              {LINKS.telegram && (
+                <a href={LINKS.telegram} target="_blank" rel="noreferrer" aria-label="Telegram" className="nav-social-icon" onClick={close}>
+                  <TelegramIcon size={18} />
+                </a>
+              )}
+              {LINKS.twitter && (
+                <a href={LINKS.twitter} target="_blank" rel="noreferrer" aria-label="X / Twitter" className="nav-social-icon" onClick={close}>
+                  <XIcon size={16} />
+                </a>
+              )}
+            </div>
           </div>
         </>
       )}
