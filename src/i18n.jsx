@@ -334,7 +334,7 @@ const dict = {
       eyebrow: 'Community Builder',
       title: 'Community ',
       titleGold: 'Builder.',
-      sub: 'The amazing people behind CHONGYA. Click to visit their profile.',
+      sub: 'Memes, raids, ops, code — everyone who builds is a builder. Tap to visit.',
     },
     bgm: {
       playAria: 'Play background music',
@@ -677,7 +677,7 @@ const dict = {
       eyebrow: '社区建设者',
       title: '社区',
       titleGold: '建设者。',
-      sub: 'CHONGYA 背后的优秀贡献者们。点击头像访问他们的主页。',
+      sub: '做 meme、冲推、搞运营、写代码……每一位都是建设者。点击头像访问主页。',
     },
     bgm: {
       playAria: '播放背景音乐',
