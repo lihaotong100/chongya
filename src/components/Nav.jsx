@@ -15,6 +15,7 @@ export default function Nav() {
     { href: '#buy', label: t('nav.howToBuy') },
     { href: '#about', label: t('nav.about') },
     { href: '#squad', label: t('nav.squad') },
+    { href: '#contributors', label: t('nav.contributors') },
   ];
 
   useEffect(() => {
