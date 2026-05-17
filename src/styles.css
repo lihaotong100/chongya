@@ -317,6 +317,30 @@ section {
   font-size: 13px;
 }
 
+.nav-socials {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.nav-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #ffffff08;
+  color: var(--muted);
+  transition: 0.18s;
+}
+
+.nav-social-icon:hover {
+  border-color: var(--gold-line);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
 .lang-toggle {
   display: inline-flex;
   align-items: center;
@@ -374,6 +398,9 @@ section {
     gap: 8px;
   }
   .nav-cta .btn {
+    display: none;
+  }
+  .nav-socials {
     display: none;
   }
   .nav-toggle {

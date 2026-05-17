@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MenuIcon, CloseIcon } from '../icons/Icon.jsx';
+import { MenuIcon, CloseIcon, XIcon, TelegramIcon } from '../icons/Icon.jsx';
 import { LINKS } from '../config.js';
 import { useLang } from '../i18n.jsx';
 
@@ -66,6 +66,18 @@ export default function Nav() {
             <a className="nav-gallery-link" href={isGallery ? '#top' : '#/gallery'}>
               {isGallery ? t('nav.backHome') : t('nav.gallery')}
             </a>
+            <div className="nav-socials">
+              {LINKS.telegram && (
+                <a href={LINKS.telegram} target="_blank" rel="noreferrer" aria-label="Telegram" className="nav-social-icon">
+                  <TelegramIcon size={16} />
+                </a>
+              )}
+              {LINKS.twitter && (
+                <a href={LINKS.twitter} target="_blank" rel="noreferrer" aria-label="X / Twitter" className="nav-social-icon">
+                  <XIcon size={14} />
+                </a>
+              )}
+            </div>
             <button
               className="lang-toggle"
               onClick={toggleLang}

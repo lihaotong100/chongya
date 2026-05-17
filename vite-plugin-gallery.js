@@ -28,16 +28,19 @@ function buildManifest(publicDir) {
   const imagesDir = path.join(publicDir, 'images');
 
   const images = [];
+  const characterImages = [];
   const music = [];
-
-  const legacyCharFiles = scanDir(characterDir, '/character');
-  legacyCharFiles.forEach((f) => { if (isImage(f)) images.push(f); });
 
   const legacyImageFiles = scanDir(imagesDir, '/images');
   legacyImageFiles.forEach((f) => { if (isImage(f)) images.push(f); });
 
   const galleryImageFiles = scanDir(galleryImagesDir, '/gallery/images');
   galleryImageFiles.forEach((f) => { if (isImage(f)) images.push(f); });
+
+  const legacyCharFiles = scanDir(characterDir, '/character');
+  legacyCharFiles.forEach((f) => { if (isImage(f)) characterImages.push(f); });
+
+  images.push(...characterImages);
 
   const bgmPath = path.join(publicDir, 'BGM.MP3');
   if (fs.existsSync(bgmPath)) music.push('/BGM.MP3');
