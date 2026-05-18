@@ -35,19 +35,25 @@ function RevealObserver() {
   const { lang } = useLang();
   const route = useHashRoute();
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let io;
+    const raf = requestAnimationFrame(() => {
+      io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (io) io.disconnect();
+    };
   }, [lang, route]);
   return null;
 }
