@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']);
 const AUDIO_EXTS = new Set(['.mp3', '.wav', '.ogg', '.m4a', '.flac']);
+const VIDEO_EXTS = new Set(['.mp4', '.webm', '.mov']);
 
 function scanDir(dir, baseUrl) {
   if (!fs.existsSync(dir)) return [];
@@ -21,15 +22,37 @@ function isAudio(filePath) {
   return AUDIO_EXTS.has(path.extname(filePath).toLowerCase());
 }
 
+function isVideo(filePath) {
+  return VIDEO_EXTS.has(path.extname(filePath).toLowerCase());
+}
+
+function fileSize(publicDir, urlPath) {
+  const abs = path.join(publicDir, urlPath);
+  try {
+    const stat = fs.statSync(abs);
+    return stat.size;
+  } catch {
+    return 0;
+  }
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
 function buildManifest(publicDir) {
   const galleryImagesDir = path.join(publicDir, 'gallery/images');
   const galleryMusicDir = path.join(publicDir, 'gallery/music');
+  const galleryVideosDir = path.join(publicDir, 'gallery/videos');
   const characterDir = path.join(publicDir, 'character');
   const imagesDir = path.join(publicDir, 'images');
 
   const images = [];
   const characterImages = [];
   const music = [];
+  const videos = [];
 
   const legacyImageFiles = scanDir(imagesDir, '/images');
   legacyImageFiles.forEach((f) => { if (isImage(f)) images.push(f); });
@@ -48,7 +71,15 @@ function buildManifest(publicDir) {
   const galleryMusicFiles = scanDir(galleryMusicDir, '/gallery/music');
   galleryMusicFiles.forEach((f) => { if (isAudio(f)) music.push(f); });
 
-  return { images, music };
+  const galleryVideoFiles = scanDir(galleryVideosDir, '/gallery/videos');
+  galleryVideoFiles.forEach((f) => {
+    if (isVideo(f)) {
+      const size = fileSize(publicDir, f);
+      videos.push({ src: f, size: formatSize(size) });
+    }
+  });
+
+  return { images, music, videos };
 }
 
 const VIRTUAL_ID = 'virtual:gallery-manifest';
@@ -81,7 +112,7 @@ export default function galleryPlugin() {
         rel.startsWith('gallery/') ||
         rel.startsWith('character/') ||
         rel.startsWith('images/') ||
-        rel === 'BGM.MP3'
+        rel === '冲鸭主题曲.mp3'
       ) {
         const mod = server.moduleGraph.getModuleById(RESOLVED_ID);
         if (mod) {

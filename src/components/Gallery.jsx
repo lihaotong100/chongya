@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLang } from '../i18n.jsx';
 import manifest from 'virtual:gallery-manifest';
 
-const PER_PAGE = 8;
+const PER_PAGE_IMAGES = 8;
+const PER_PAGE_VIDEOS = 4;
 
 function fileName(src) {
   return decodeURIComponent(src.split('/').pop());
@@ -35,6 +36,12 @@ export default function Gallery() {
             {t('gallery.tabImages')}
           </button>
           <button
+            className={`gallery-tab${tab === 'videos' ? ' is-active' : ''}`}
+            onClick={() => setTab('videos')}
+          >
+            {t('gallery.tabVideos')}
+          </button>
+          <button
             className={`gallery-tab${tab === 'music' ? ' is-active' : ''}`}
             onClick={() => setTab('music')}
           >
@@ -43,6 +50,7 @@ export default function Gallery() {
         </div>
 
         {tab === 'images' && <ImageGrid images={manifest.images} t={t} />}
+        {tab === 'videos' && <VideoGrid videos={manifest.videos} t={t} />}
         {tab === 'music' && <MusicList tracks={manifest.music} t={t} />}
       </div>
     </div>
@@ -54,9 +62,9 @@ export default function Gallery() {
 function ImageGrid({ images, t }) {
   const [page, setPage] = useState(0);
   const [lightbox, setLightbox] = useState(-1);
-  const totalPages = Math.ceil(images.length / PER_PAGE);
-  const start = page * PER_PAGE;
-  const visible = images.slice(start, start + PER_PAGE);
+  const totalPages = Math.ceil(images.length / PER_PAGE_IMAGES);
+  const start = page * PER_PAGE_IMAGES;
+  const visible = images.slice(start, start + PER_PAGE_IMAGES);
 
   useEffect(() => { setPage(0); }, [images]);
 
@@ -80,27 +88,7 @@ function ImageGrid({ images, t }) {
       </div>
 
       {totalPages > 1 && (
-        <div className="gallery-pagination">
-          <button
-            className="gallery-page-btn"
-            disabled={page === 0}
-            onClick={() => setPage((p) => p - 1)}
-            aria-label={t('gallery.prev')}
-          >
-            ‹
-          </button>
-          <span className="gallery-page-info">
-            {page + 1} / {totalPages}
-          </span>
-          <button
-            className="gallery-page-btn"
-            disabled={page === totalPages - 1}
-            onClick={() => setPage((p) => p + 1)}
-            aria-label={t('gallery.next')}
-          >
-            ›
-          </button>
-        </div>
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} t={t} />
       )}
 
       {lightbox >= 0 && (
@@ -112,6 +100,128 @@ function ImageGrid({ images, t }) {
         />
       )}
     </>
+  );
+}
+
+/* ────── Video Grid with Pagination ────── */
+
+function VideoGrid({ videos, t }) {
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(videos.length / PER_PAGE_VIDEOS);
+  const start = page * PER_PAGE_VIDEOS;
+  const visible = videos.slice(start, start + PER_PAGE_VIDEOS);
+
+  useEffect(() => { setPage(0); }, [videos]);
+
+  if (!videos.length) return <p className="gallery-empty">{t('gallery.noVideos')}</p>;
+
+  return (
+    <>
+      <div className="video-grid" key={page}>
+        {visible.map((v) => (
+          <VideoCard key={v.src} video={v} t={t} />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} t={t} />
+      )}
+    </>
+  );
+}
+
+function VideoCard({ video, t }) {
+  const { src, size } = video;
+  const videoRef = useRef(null);
+  const [state, setState] = useState('idle');
+
+  const handleClick = () => {
+    if (state !== 'idle') return;
+    setState('loading');
+  };
+
+  const onCanPlay = () => {
+    setState('ready');
+    if (videoRef.current) videoRef.current.play();
+  };
+
+  const onError = () => {
+    setState('idle');
+  };
+
+  return (
+    <div className={`video-card video-card--${state}`}>
+      {state === 'idle' && (
+        <button className="video-card-idle" onClick={handleClick}>
+          <div className="video-card-play">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <div className="video-card-meta">
+            <span className="video-card-name">{fileName(src)}</span>
+            <span className="video-card-size">{size}</span>
+          </div>
+        </button>
+      )}
+
+      {state === 'loading' && (
+        <div className="video-card-loading">
+          <div className="video-card-spinner" />
+          <span className="video-card-loading-text">{t('gallery.videoLoading')}</span>
+          <video
+            ref={videoRef}
+            src={src}
+            controls
+            preload="auto"
+            onCanPlay={onCanPlay}
+            onError={onError}
+            style={{ display: 'none' }}
+          />
+        </div>
+      )}
+
+      {state === 'ready' && (
+        <>
+          <video
+            ref={videoRef}
+            src={src}
+            controls
+            autoPlay
+            className="video-card-player is-visible"
+          />
+          <span className="video-card-name video-card-name--below">{fileName(src)}</span>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ────── Pagination ────── */
+
+function Pagination({ page, totalPages, setPage, t }) {
+  return (
+    <div className="gallery-pagination">
+      <button
+        className="gallery-page-btn"
+        disabled={page === 0}
+        onClick={() => setPage((p) => p - 1)}
+        aria-label={t('gallery.prev')}
+      >
+        ‹
+      </button>
+      <span className="gallery-page-info">
+        {page + 1} / {totalPages}
+      </span>
+      <button
+        className="gallery-page-btn"
+        disabled={page === totalPages - 1}
+        onClick={() => setPage((p) => p + 1)}
+        aria-label={t('gallery.next')}
+      >
+        ›
+      </button>
+    </div>
   );
 }
 
