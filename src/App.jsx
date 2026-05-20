@@ -12,11 +12,13 @@ import Contributors from './components/Contributors.jsx';
 import Footer from './components/Footer.jsx';
 import BGMToggle from './components/BGMToggle.jsx';
 import Gallery from './components/Gallery.jsx';
+import Announcement from './components/Announcement.jsx';
 
 function useHashRoute() {
   const getRoute = useCallback(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#/gallery')) return 'gallery';
+    if (hash.startsWith('#/announcement')) return 'announcement';
     return 'home';
   }, []);
 
@@ -78,6 +80,11 @@ function GalleryPage() {
   return <Gallery />;
 }
 
+function AnnouncementPage() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  return <Announcement />;
+}
+
 export default function App() {
   const route = useHashRoute();
 
@@ -88,6 +95,7 @@ export default function App() {
         <Nav />
         {route === 'home' && <HomePage />}
         {route === 'gallery' && <GalleryPage />}
+        {route === 'announcement' && <AnnouncementPage />}
         <Footer />
         <BGMToggle />
       </div>

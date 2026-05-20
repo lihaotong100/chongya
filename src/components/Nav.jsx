@@ -9,7 +9,8 @@ export default function Nav() {
   const firstLinkRef = useRef(null);
   const togglerRef = useRef(null);
 
-  const isGallery = window.location.hash.startsWith('#/gallery');
+  const hash = window.location.hash;
+  const isSubpage = hash.startsWith('#/gallery') || hash.startsWith('#/announcement');
 
   const homeLinks = [
     { href: '#meaning', label: t('nav.meaning') },
@@ -20,7 +21,7 @@ export default function Nav() {
     { href: '#contributors', label: t('nav.contributors') },
   ];
 
-  const links = isGallery ? [] : homeLinks;
+  const links = isSubpage ? [] : homeLinks;
 
   useEffect(() => {
     if (!open) {
@@ -63,8 +64,8 @@ export default function Nav() {
             ))}
           </div>
           <div className="nav-cta">
-            <a className="nav-gallery-link" href={isGallery ? '#top' : '#/gallery'}>
-              {isGallery ? t('nav.backHome') : t('nav.gallery')}
+            <a className="nav-gallery-link" href={isSubpage ? '#top' : '#/gallery'}>
+              {isSubpage ? t('nav.backHome') : t('nav.gallery')}
             </a>
             <div className="nav-socials">
               {LINKS.telegram && (
@@ -128,8 +129,8 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
-            <a href={isGallery ? '#top' : '#/gallery'} onClick={close}>
-              {isGallery ? t('nav.backHome') : t('nav.gallery')}
+            <a href={isSubpage ? '#top' : '#/gallery'} onClick={close}>
+              {isSubpage ? t('nav.backHome') : t('nav.gallery')}
             </a>
             <a
               className="btn btn-primary"
