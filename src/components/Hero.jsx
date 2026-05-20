@@ -21,6 +21,12 @@ export default function Hero() {
   return (
     <section className="hero" id="top">
       <div className="container">
+        <a className="announcement-banner" href="#/announcement">
+          <span className="announcement-banner-text">
+            🔥 {t('announcement.title')}
+          </span>
+          <span className="announcement-banner-arrow">→</span>
+        </a>
         <div className="hero-grid">
           <div>
             <span className="eyebrow">
